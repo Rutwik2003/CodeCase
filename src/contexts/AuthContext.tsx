@@ -162,6 +162,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return result;
   };
 
+  // Utility function to remove undefined values from objects before Firestore operations
+  const sanitizeForFirestore = (obj: any): any => {
+    const cleaned: any = {};
+    Object.keys(obj).forEach(key => {
+      if (obj[key] !== undefined) {
+        if (obj[key] && typeof obj[key] === 'object' && obj[key].constructor === Object) {
+          cleaned[key] = sanitizeForFirestore(obj[key]);
+        } else {
+          cleaned[key] = obj[key];
+        }
+      }
+    });
+    return cleaned;
+  };
+
   // Create initial user data in Firestore
   const createUserData = async (user: User, displayName: string, referralCode?: string) => {
     console.log('📝 Starting createUserData...');
@@ -209,7 +224,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         totalRewards: 0,
         referralHistory: []
       },
-      referredBy: referralCode
+      ...(referralCode && { referredBy: referralCode })
     };
 
     try {
@@ -217,7 +232,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       console.log('📄 Document path: users/' + user.uid);
       console.log('📊 Data to save:', JSON.stringify(initialUserData, null, 2));
       
-      await setDoc(doc(db, 'users', user.uid), initialUserData);
+      // Sanitize data to remove any undefined values
+      const sanitizedData = sanitizeForFirestore(initialUserData);
+      console.log('🧹 Sanitized data:', JSON.stringify(sanitizedData, null, 2));
+      
+      await setDoc(doc(db, 'users', user.uid), sanitizedData);
       console.log('✅ User data saved successfully');
       setUserData(initialUserData);
       console.log('✅ UserData state updated');

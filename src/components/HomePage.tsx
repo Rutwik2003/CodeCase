@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header } from './Header';
 import { Hero } from './Hero';
 import { CasesSection } from './CasesSection';
@@ -6,27 +7,47 @@ import { Footer } from './Footer';
 import { useAuth } from '../contexts/AuthContext';
 
 export const HomePage: React.FC = () => {
-  const { userData } = useAuth();
+  const { userData, currentUser } = useAuth();
+  const navigate = useNavigate();
   const availableHints = userData?.hints || 0;
 
   const handleCaseSelect = (caseId: string) => {
-    // Navigate to case using the router
-    window.location.href = `/case/${caseId}`;
+    // Check if user is authenticated before starting investigation
+    if (!currentUser) {
+      const shouldLogin = window.confirm(
+        "You need to login or register to start an investigation. Would you like to go to the login page?"
+      );
+      if (shouldLogin) {
+        navigate('/signin');
+      }
+      return;
+    }
+
+    // Navigate to appropriate case route dynamically
+    switch (caseId) {
+      case 'case-vanishing-blogger':
+        navigate('/tutorialcase');
+        break;
+      case 'visual-vanishing-blogger':
+        navigate('/vanishingblogger');
+        break;
+      default:
+        // For future cases, use dynamic routing
+        navigate(`/case/${caseId}`);
+        break;
+    }
   };
 
   const handleShowLearnPage = () => {
-    // Navigate to learn page using the router
-    window.location.href = '/training';
+    navigate('/training');
   };
 
   const handleShowAuthPage = () => {
-    // Navigate to auth page using the router
-    window.location.href = '/signin';
+    navigate('/signin');
   };
 
   const handleShowProfilePage = () => {
-    // Navigate to profile page using the router
-    window.location.href = '/profile';
+    navigate('/profile');
   };
 
   const handleHomeClick = () => {

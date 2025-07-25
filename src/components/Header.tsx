@@ -124,30 +124,32 @@ export const Header: React.FC<HeaderProps> = ({
           
           {/* Right Side - Detective Status & Action Buttons - Full width usage */}
           <div className="hidden md:flex items-center space-x-3 flex-shrink-0 min-w-[420px] justify-end">
-            {/* Detective Status Panel */}
-            <div className="flex items-center space-x-2">
-              {/* Investigation Points */}
-              <motion.div 
-                className="flex items-center justify-center space-x-2 bg-slate-800/30 backdrop-blur-sm border border-slate-600/30 rounded-lg w-[90px] h-[44px]"
-                whileHover={{ scale: 1.05, y: -1 }}
-              >
-                <Star className="w-4 h-4 text-amber-400" />
-                <span className="text-sm font-mono text-slate-300">
-                  {userData?.totalPoints?.toLocaleString() || '8,000'}
-                </span>
-              </motion.div>
+            {/* Detective Status Panel - Only show if user is logged in */}
+            {currentUser && (
+              <div className="flex items-center space-x-2">
+                {/* Investigation Points */}
+                <motion.div 
+                  className="flex items-center justify-center space-x-2 bg-slate-800/30 backdrop-blur-sm border border-slate-600/30 rounded-lg w-[90px] h-[44px]"
+                  whileHover={{ scale: 1.05, y: -1 }}
+                >
+                  <Star className="w-4 h-4 text-amber-400" />
+                  <span className="text-sm font-mono text-slate-300">
+                    {userData?.totalPoints?.toLocaleString() || '0'}
+                  </span>
+                </motion.div>
 
-              {/* Available Hints */}
-              <motion.div 
-                className="flex items-center justify-center space-x-2 bg-slate-800/30 backdrop-blur-sm border border-slate-600/30 rounded-lg w-[70px] h-[44px]"
-                whileHover={{ scale: 1.05, y: -1 }}
-              >
-                <Badge className="w-4 h-4 text-blue-400" />
-                <span className="text-sm font-mono text-slate-300">
-                  {userData?.hints || availableHints || '18'}
-                </span>
-              </motion.div>
-            </div>
+                {/* Available Hints */}
+                <motion.div 
+                  className="flex items-center justify-center space-x-2 bg-slate-800/30 backdrop-blur-sm border border-slate-600/30 rounded-lg w-[70px] h-[44px]"
+                  whileHover={{ scale: 1.05, y: -1 }}
+                >
+                  <Badge className="w-4 h-4 text-blue-400" />
+                  <span className="text-sm font-mono text-slate-300">
+                    {userData?.hints || '0'}
+                  </span>
+                </motion.div>
+              </div>
+            )}
 
             {/* Action Buttons */}
             <div className="flex items-center space-x-2 pl-3 border-l border-slate-600/30">
@@ -353,12 +355,15 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             )}
             
-            <div className="flex items-center justify-center pt-2 theme-border-t">
-              <div className="flex items-center space-x-2">
-                <Badge className="w-5 h-5 theme-accent-text" />
-                <span className="text-sm font-medium theme-text-secondary">{userData?.hints || availableHints} Hints</span>
+            {/* Mobile Hints Display - Only show if user is logged in */}
+            {currentUser && (
+              <div className="flex items-center justify-center pt-2 theme-border-t">
+                <div className="flex items-center space-x-2">
+                  <Badge className="w-5 h-5 theme-accent-text" />
+                  <span className="text-sm font-medium theme-text-secondary">{userData?.hints || 0} Hints</span>
+                </div>
               </div>
-            </div>
+            )}
             
             {/* Mobile Logout Button - At Bottom */}
             {currentUser && (

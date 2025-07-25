@@ -6,8 +6,6 @@ import { VanishingBloggerCase } from './VanishingBloggerCase';
 import { LearnPage } from './LearnPage';
 import { AuthPage } from './AuthPage';
 import { ProfilePage } from './ProfilePage';
-import { CaseInterface } from './CaseInterface';
-import { DetectiveCaseInterface } from './DetectiveCaseInterface';
 import { NotFoundPage } from './NotFoundPage';
 
 interface AppRouterProps {
@@ -31,7 +29,7 @@ function LearnPageWrapper() {
   return <LearnPage onBack={handleBack} />;
 }
 
-function ProfilePageWrapper({ initialTab }: { initialTab?: string }) {
+function ProfilePageWrapper() {
   const navigate = useNavigate();
   const handleBack = () => navigate('/');
   
@@ -71,7 +69,7 @@ function VanishingBloggerWrapper({ onCaseComplete }: { onCaseComplete: (caseId: 
 }
 
 // Helper component to handle dynamic case routes
-function CaseRouteHandler({ availableHints, addToast, onCaseComplete }: Omit<AppRouterProps, 'availableHints'> & { availableHints: number }) {
+function CaseRouteHandler({ onCaseComplete }: { onCaseComplete: (caseId: string, score: number, timeSpent: number, hintsUsed: number) => void }) {
   const { caseId } = useParams<{ caseId: string }>();
   const navigate = useNavigate();
   
@@ -81,9 +79,43 @@ function CaseRouteHandler({ availableHints, addToast, onCaseComplete }: Omit<App
 
   const handleBack = () => navigate('/');
 
-  // Handle different case types
-  // For now, just redirect to home for unhandled cases
-  return <Navigate to="/" replace />;
+  // Handle different case types dynamically
+  switch (caseId) {
+    case 'case-vanishing-blogger':
+      return (
+        <TutorialCaseWrapper 
+          onCaseComplete={onCaseComplete}
+        />
+      );
+    case 'visual-vanishing-blogger':
+      return (
+        <VanishingBloggerWrapper 
+          onCaseComplete={onCaseComplete}
+        />
+      );
+    case 'case-2':
+    case 'case-3':
+    case 'case-4':
+    case 'case-5':
+      // For future cases, you can add specific components here
+      // For now, show a "Coming Soon" message
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+          <div className="text-center p-8">
+            <h1 className="text-4xl font-bold text-white mb-4">Case Coming Soon!</h1>
+            <p className="text-slate-300 mb-6">This case is under development.</p>
+            <button 
+              onClick={handleBack}
+              className="px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold transition-colors"
+            >
+              Return to Cases
+            </button>
+          </div>
+        </div>
+      );
+    default:
+      return <Navigate to="/" replace />;
+  }
 }
 
 export function AppRouter({ availableHints, addToast, onCaseComplete }: AppRouterProps) {
@@ -135,8 +167,6 @@ export function AppRouter({ availableHints, addToast, onCaseComplete }: AppRoute
           path="/case/:caseId" 
           element={
             <CaseRouteHandler 
-              availableHints={availableHints}
-              addToast={addToast}
               onCaseComplete={onCaseComplete}
             />
           } 
@@ -155,7 +185,7 @@ export function AppRouter({ availableHints, addToast, onCaseComplete }: AppRoute
           path="/profile/referral" 
           element={
             currentUser ? 
-            <ProfilePageWrapper initialTab="referral" /> : 
+            <ProfilePageWrapper /> : 
             <Navigate to="/signin" replace />
           } 
         />
@@ -163,7 +193,7 @@ export function AppRouter({ availableHints, addToast, onCaseComplete }: AppRoute
           path="/profile/achievements" 
           element={
             currentUser ? 
-            <ProfilePageWrapper initialTab="achievements" /> : 
+            <ProfilePageWrapper /> : 
             <Navigate to="/signin" replace />
           } 
         />

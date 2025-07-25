@@ -979,7 +979,7 @@ footer {
     50% { background: #fcf8e3; }
 }`,
     hints: [],
-    cluePoints: 2000,
+    cluePoints: 750,
     difficulty: 'Beginner',
     duration: '20-25 min'
   },

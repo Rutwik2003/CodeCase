@@ -24,10 +24,17 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack }) => {
 
   const { login, register, currentUser, processReferral } = useAuth();
 
-  // Check for referral code in URL
+  // Check for referral code in URL and determine page mode
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const refCode = urlParams.get('ref');
+    
+    // Set signup mode if user came from signup URL or has referral code
+    const path = window.location.pathname;
+    if (path === '/signup' || refCode) {
+      setIsLogin(false); // Switch to signup mode
+    }
+    
     if (refCode) {
       setFormData(prev => ({ ...prev, referralCode: refCode }));
       setReferralMessage('🎉 You have a referral code! You\'ll get bonus points and hints when you sign up.');
@@ -249,16 +256,18 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack }) => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="w-full max-w-md mx-auto"
         >
-          {/* Back Button */}
-          <button
-            onClick={onBack}
-            className="mb-6 flex items-center space-x-2 text-gray-300 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back to Home</span>
-          </button>
-
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
+            {/* Back Button - Inside container */}
+            <div className="mb-6">
+              <button
+                onClick={onBack}
+                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back to Home</span>
+              </button>
+            </div>
+
             {/* Header */}
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
@@ -505,18 +514,6 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack }) => {
                 </motion.p>
               </AnimatePresence>
             </div>
-
-            {/* Social divider */}
-            <div className="mt-8 relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/20"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-transparent text-gray-400">Or continue with</span>
-              </div>
-            </div>
-
-            {/* Social buttons */}
           </div>
         </motion.div>
       </div>
