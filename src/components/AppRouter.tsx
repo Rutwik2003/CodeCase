@@ -8,6 +8,7 @@ import { AuthPage } from './AuthPage';
 import { ProfilePage } from './ProfilePage';
 import { CaseInterface } from './CaseInterface';
 import { DetectiveCaseInterface } from './DetectiveCaseInterface';
+import { NotFoundPage } from './NotFoundPage';
 
 interface AppRouterProps {
   availableHints: number;
@@ -168,7 +169,7 @@ export function AppRouter({ availableHints, addToast, onCaseComplete }: AppRoute
         />
 
         {/* Catch all route */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
