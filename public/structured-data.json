@@ -3,8 +3,8 @@
   "@type": "EducationalOrganization",
   "name": "CodeCase Detective Academy",
   "description": "Learn HTML & CSS by solving detective mysteries. Fix broken websites, uncover clues, and master web development with your AI partner!",
-  "url": "%VITE_APP_URL%",
-  "logo": "%VITE_APP_URL%/icons/icon-512x512.png",
+  "url": "https://codecase.appwrite.network",
+  "logo": "https://codecase.appwrite.network/icons/icon-512x512.png",
   "sameAs": [
     "https://github.com/your-username/codecase-detective-academy"
   ],
