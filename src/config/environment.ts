@@ -13,16 +13,7 @@ interface EnvironmentConfig {
     url: string;
   };
   
-  // Appwrite Configuration
-  appwrite: {
-    endpoint: string;
-    projectId: string;
-    databaseId: string;
-    usersCollectionId: string;
-    storageBucketId: string;
-  };
-  
-  // Firebase Configuration (for migration)
+  // Firebase Configuration
   firebase: {
     apiKey: string;
     authDomain: string;
@@ -132,14 +123,6 @@ export const env: EnvironmentConfig = {
     url: validateEnvironmentVariable('VITE_APP_URL'),
   },
   
-  appwrite: {
-    endpoint: validateEnvironmentVariable('VITE_APPWRITE_ENDPOINT'),
-    projectId: validateEnvironmentVariable('VITE_APPWRITE_PROJECT_ID'),
-    databaseId: validateEnvironmentVariable('VITE_APPWRITE_DATABASE_ID', 'codecase-db'),
-    usersCollectionId: validateEnvironmentVariable('VITE_APPWRITE_USERS_COLLECTION_ID', 'users'),
-    storageBucketId: validateEnvironmentVariable('VITE_APPWRITE_STORAGE_BUCKET_ID', 'assets'),
-  },
-  
   firebase: {
     apiKey: validateEnvironmentVariable('VITE_FIREBASE_API_KEY'),
     authDomain: validateEnvironmentVariable('VITE_FIREBASE_AUTH_DOMAIN'),
@@ -211,7 +194,6 @@ export const isTest = import.meta.env.MODE === 'test';
 // Environment validation function
 export const validateEnvironment = (): boolean => {
   const requiredVars = [
-    'VITE_APPWRITE_PROJECT_ID',
     'VITE_GA_TRACKING_ID'
   ];
   
@@ -242,7 +224,6 @@ export const debugEnvironment = (): void => {
 
 // Export individual configurations for easier access
 export const appConfig = env.app;
-export const appwriteConfig = env.appwrite;
 export const firebaseConfig = env.firebase;
 export const analyticsConfig = env.analytics;
 export const securityConfig = env.security;

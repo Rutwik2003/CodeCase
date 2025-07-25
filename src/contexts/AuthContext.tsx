@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   updateProfile
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, updateDoc, collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc, collection, query, where, getDocs, Timestamp, serverTimestamp } from 'firebase/firestore';
 import { logEvent } from 'firebase/analytics';
 import { auth, db, analytics } from '../config/firebase';
 
@@ -25,15 +25,15 @@ interface UserData {
   profilePictureUrl?: string;
   preferences: UserPreferences;
   statistics: UserStatistics;
-  createdAt: Date;
-  lastLogin: Date;
+  createdAt: Timestamp;
+  lastLogin: Timestamp;
   referralCode: string;
   referralStats: ReferralStats;
   referredBy?: string;
   // Daily login streak fields
   loginStreak?: number;
-  lastLoginStreak?: Date | Timestamp;
-  lastClaimDate?: Date | Timestamp;
+  lastLoginStreak?: Timestamp;
+  lastClaimDate?: Timestamp;
 }
 
 interface ReferralStats {
@@ -134,10 +134,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // Update last login
         console.log('⏰ Updating last login timestamp...');
         await updateDoc(doc(db, 'users', user.uid), {
-          lastLogin: new Date()
+          lastLogin: Timestamp.fromDate(new Date())
         });
         console.log('✅ User data loaded and last login updated');
-        setUserData({ ...data, lastLogin: new Date() });
+        setUserData({ ...data, lastLogin: Timestamp.fromDate(new Date()) });
       } else {
         console.log('❌ No user document found in Firestore for:', user.uid);
       }
@@ -199,8 +199,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         currentStreak: 0,
         bestStreak: 0
       },
-      createdAt: new Date(),
-      lastLogin: new Date(),
+      createdAt: Timestamp.fromDate(new Date()),
+      lastLogin: Timestamp.fromDate(new Date()),
       referralCode: userReferralCode,
       referralStats: {
         totalReferrals: 0,
