@@ -1,0 +1,56 @@
+{
+  "projectId": "your-appwrite-project-id",
+  "projectName": "CodeCase Detective Academy",
+  "functions": [],
+  "databases": [
+    {
+      "name": "codecase-db",
+      "enabled": true
+    }
+  ],
+  "collections": [
+    {
+      "name": "users",
+      "enabled": true,
+      "documentSecurity": true,
+      "attributes": [
+        {
+          "key": "email",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "displayName",
+          "type": "string",
+          "required": false
+        },
+        {
+          "key": "completedCases",
+          "type": "string",
+          "array": true,
+          "required": false
+        },
+        {
+          "key": "hints",
+          "type": "integer",
+          "required": false,
+          "default": 3
+        },
+        {
+          "key": "points",
+          "type": "integer",
+          "required": false,
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "buckets": [
+    {
+      "name": "assets",
+      "enabled": true,
+      "maximumFileSize": 10485760,
+      "allowedFileExtensions": ["jpg", "jpeg", "png", "gif", "webp", "svg"]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: %VITE_APP_URL%/sitemap.xml
+
+# Allow crawling of important pages
+Allow: /
+Allow: /learn
+Allow: /cases
+Allow: /profile
+
+# Disallow admin/config pages (if any)
+Disallow: /admin
+Disallow: /config
+Disallow: /_app
+Disallow: /api
+
+# Crawl delay (optional) - Optimized for India
+Crawl-delay: 1
+
+# India-specific optimization
+# Allow Googlebot (popular in India)
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Allow Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

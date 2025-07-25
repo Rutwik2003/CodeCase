@@ -1,0 +1,74 @@
+name: Deploy to Appwrite
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build project
+      run: npm run build
+      env:
+        # Environment variables for codebuster.rutwikdev.com
+        VITE_APP_URL: https://codebuster.rutwikdev.com
+        VITE_DOMAIN: codebuster.rutwikdev.com
+        VITE_APPWRITE_ENDPOINT: ${{ secrets.APPWRITE_ENDPOINT }}
+        VITE_APPWRITE_PROJECT_ID: ${{ secrets.APPWRITE_PROJECT_ID }}
+        VITE_APPWRITE_DATABASE_ID: codebuster-db
+        VITE_APPWRITE_USERS_COLLECTION_ID: users
+        VITE_APPWRITE_STORAGE_BUCKET_ID: assets
+        # Firebase credentials (for migration)
+        VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+        VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+        VITE_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+        VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+        VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+        VITE_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+        VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+        # Analytics
+        VITE_GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+      
+    - name: Run tests (if available)
+      run: npm run test --if-present
+      
+    - name: Deploy to Appwrite
+      uses: appwrite/action-deploy@v2
+      with:
+        appwrite-endpoint: ${{ secrets.APPWRITE_ENDPOINT }}
+        appwrite-project-id: ${{ secrets.APPWRITE_PROJECT_ID }}
+        appwrite-api-key: ${{ secrets.APPWRITE_API_KEY }}
+        appwrite-cli-version: '5.0.0'
+        build-dir: 'dist'
+        
+    - name: Update sitemap (production only)
+      if: github.ref == 'refs/heads/main'
+      run: |
+        # Domain is already set to codebuster.rutwikdev.com in build
+        echo "✅ Domain configuration complete: codebuster.rutwikdev.com"
+        
+    - name: Notify deployment status
+      uses: 8398a7/action-slack@v3
+      if: always()
+      with:
+        status: ${{ job.status }}
+        channel: '#deployments'
+        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

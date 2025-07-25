@@ -1,13 +1,13 @@
-# 🕵️ CodeBuster Detective Academy
+# 🕵️ CodeCase Detective Academy
 
-[![Website](https://img.shields.io/badge/Website-codebuster.rutwikdev.com-blue)](https://codebuster.rutwikdev.com)
+[![Website](https://img.shields.io/badge/Website-codecase.rutwikdev.com-blue)](https://codecase.rutwikdev.com)
 [![Build Status](https://img.shields.io/badge/Build-Passing-green)](#)
 [![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen)](#)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](#)
 
 > **Learn HTML & CSS by solving interactive detective mysteries!** 🔍
 
-CodeBuster Detective Academy is an innovative gamified learning platform that teaches web development through engaging detective cases. Master HTML, CSS, and JavaScript while solving mysteries and earning achievements.
+CodeCase Detective Academy is an innovative gamified learning platform that teaches web development through engaging detective cases. Master HTML, CSS, and JavaScript while solving mysteries and earning achievements.
 
 ## 🌟 Features
 
@@ -47,8 +47,8 @@ CodeBuster Detective Academy is an innovative gamified learning platform that te
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/codebuster-detective-academy.git
-cd codebuster-detective-academy
+git clone https://github.com/your-username/codecase-detective-academy.git
+cd codecase-detective-academy
 
 # Install dependencies
 npm install
@@ -98,7 +98,7 @@ npm run deploy         # Deploy to Appwrite
 ## 📁 Project Structure
 
 ```
-codebuster-detective-academy/
+codecase-detective-academy/
 ├── 📂 src/                    # Source code
 │   ├── 📂 components/         # React components
 │   ├── 📂 contexts/          # React contexts
@@ -119,7 +119,7 @@ codebuster-detective-academy/
 
 ## 🌐 Live Website
 
-Visit the live application: **[codebuster.rutwikdev.com](https://codebuster.rutwikdev.com)**
+Visit the live application: **[codecase.rutwikdev.com](https://codecase.rutwikdev.com)**
 
 ## 🔧 Configuration
 
@@ -127,13 +127,13 @@ Visit the live application: **[codebuster.rutwikdev.com](https://codebuster.rutw
 See `.env.example` for all required environment variables.
 
 Key configurations:
-- `VITE_APP_URL`: Your domain (codebuster.rutwikdev.com)
+- `VITE_APP_URL`: Your domain (codecase.rutwikdev.com)
 - `VITE_APPWRITE_PROJECT_ID`: Appwrite project ID
 - `VITE_FIREBASE_*`: Firebase configuration
 - `VITE_GOOGLE_ANALYTICS_ID`: GA4 tracking ID
 
 ### Domain Setup
-The project is configured for the custom domain `codebuster.rutwikdev.com`. See `docs/deployment/CUSTOM_DOMAIN_SETUP.md` for detailed setup instructions.
+The project is configured for the custom domain `codecase.rutwikdev.com`. See `docs/deployment/CUSTOM_DOMAIN_SETUP.md` for detailed setup instructions.
 
 ## 📚 Documentation
 
@@ -179,7 +179,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-- **Issues**: [GitHub Issues](https://github.com/your-username/codebuster-detective-academy/issues)
+- **Issues**: [GitHub Issues](https://github.com/your-username/codecase-detective-academy/issues)
 - **Documentation**: [Project Docs](docs/)
 - **Email**: support@rutwikdev.com
 
