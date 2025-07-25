@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, Gift } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, Gift, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -178,10 +178,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack }) => {
           >
             <div className="flex items-center justify-center lg:justify-start space-x-3">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
-                <span className="text-2xl font-bold text-white">CB</span>
+                <Search className="w-8 h-8 text-white" />
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold text-white">
-                Code <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Buster</span>
+                Code <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Case</span>
               </h1>
             </div>
             

@@ -1,13 +1,13 @@
-# 🕵️ CodeBuster Detective Academy
+# 🕵️ CodeCase Detective Academy
 
-[![Website](https://img.shields.io/badge/Website-codebuster.rutwikdev.com-blue)](https://codebuster.rutwikdev.com)
+[![Website](https://img.shields.io/badge/Website-codecase.appwrite.network-blue)](https://codecase.appwrite.network)
 [![Build Status](https://img.shields.io/badge/Build-Passing-green)](#)
 [![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen)](#)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](#)
 
 > **Learn HTML & CSS by solving interactive detective mysteries!** 🔍
 
-CodeBuster Detective Academy is an innovative gamified learning platform that teaches web development through engaging detective cases. Master HTML, CSS, and JavaScript while solving mysteries and earning achievements.
+CodeCase Detective Academy is an innovative gamified learning platform that teaches web development through engaging detective cases. Master HTML, CSS, and JavaScript while solving mysteries and earning achievements.
 
 ## 🌟 Features
 
@@ -23,7 +23,13 @@ CodeBuster Detective Academy is an innovative gamified learning platform that te
 - **Referral Program**: Invite friends and earn rewards
 - **Daily Login Rewards**: Gamified engagement system
 
-### 🇮🇳 India-Focused
+### � URL Routing
+- **Clean URLs**: `/training`, `/profile`, `/signin`, `/signup`
+- **Case URLs**: `/tutorialcase`, `/vanishingblogger`
+- **SEO Friendly**: Proper URL structure for search engines
+- **Browser Navigation**: Full back/forward button support
+
+### �🇮🇳 India-Focused
 - **Currency**: Indian Rupee (INR) support
 - **Timezone**: Asia/Kolkata optimization
 - **Language**: English (India) - en-IN
@@ -47,7 +53,7 @@ CodeBuster Detective Academy is an innovative gamified learning platform that te
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/codebuster-detective-academy.git
+git clone https://github.com/your-username/codecase-detective-academy.git
 cd codebuster-detective-academy
 
 # Install dependencies

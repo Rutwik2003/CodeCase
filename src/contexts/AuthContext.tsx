@@ -126,17 +126,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Load user data from Firestore
   const loadUserData = async (user: User) => {
     try {
+      console.log('📥 Loading user data from Firestore for:', user.uid);
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (userDoc.exists()) {
+        console.log('📄 User document found');
         const data = userDoc.data() as UserData;
         // Update last login
+        console.log('⏰ Updating last login timestamp...');
         await updateDoc(doc(db, 'users', user.uid), {
           lastLogin: new Date()
         });
+        console.log('✅ User data loaded and last login updated');
         setUserData({ ...data, lastLogin: new Date() });
+      } else {
+        console.log('❌ No user document found in Firestore for:', user.uid);
       }
     } catch (error) {
-      console.error('Error loading user data:', error);
+      console.error('❌ Error loading user data:', error);
     }
   };
 
@@ -158,7 +164,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Create initial user data in Firestore
   const createUserData = async (user: User, displayName: string, referralCode?: string) => {
+    console.log('📝 Starting createUserData...');
+    console.log('👤 User UID:', user.uid);
+    console.log('📧 User Email:', user.email);
+    console.log('🏷️ Display Name:', displayName);
+    console.log('🎫 Referral Code:', referralCode);
+    
     const userReferralCode = generateReferralCode(user.uid);
+    console.log('🎯 Generated referral code:', userReferralCode);
     
     const initialUserData: UserData = {
       uid: user.uid,
@@ -200,10 +213,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     try {
+      console.log('💾 Saving user data to Firestore...');
+      console.log('📄 Document path: users/' + user.uid);
+      console.log('📊 Data to save:', JSON.stringify(initialUserData, null, 2));
+      
       await setDoc(doc(db, 'users', user.uid), initialUserData);
+      console.log('✅ User data saved successfully');
       setUserData(initialUserData);
+      console.log('✅ UserData state updated');
     } catch (error) {
-      console.error('Error creating user data:', error);
+      console.error('❌ Error creating user data:', error);
+      console.error('❌ Error code:', (error as any).code);
+      console.error('❌ Error message:', (error as any).message);
+      
+      // Check if it's a permissions error
+      if ((error as any).code === 'permission-denied') {
+        console.error('🚫 Firestore permission denied - check security rules');
+      }
+      
+      // Check if it's a network error
+      if ((error as any).code === 'unavailable') {
+        console.error('🌐 Firestore unavailable - check network connection');
+      }
+      
+      throw error; // Re-throw so the parent function knows it failed
     }
   };
 
@@ -400,12 +433,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Register new user
   const register = async (email: string, password: string, displayName: string, referralCode?: string) => {
     try {
+      console.log('🚀 Starting registration process...');
+      console.log('📧 Email:', email);
+      console.log('👤 Display Name:', displayName);
+      console.log('🎫 Referral Code:', referralCode);
+      
       let validReferral = false;
       let referrerData: UserData | null = null;
 
       // Validate referral code if provided
       if (referralCode) {
+        console.log('🔍 Validating referral code...');
         const result = await processReferral(referralCode);
+        console.log('🎯 Referral validation result:', result);
         if (result.success) {
           validReferral = true;
           // Get referrer data for rewards
@@ -421,9 +461,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       }
 
+      console.log('🔐 Creating Firebase user...');
       const result = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('✅ Firebase user created:', result.user.uid);
+      
+      console.log('📝 Updating user profile...');
       await updateProfile(result.user, { displayName });
+      console.log('✅ Profile updated');
+      
+      console.log('💾 Creating user data in Firestore...');
       await createUserData(result.user, displayName, validReferral ? referralCode : undefined);
+      console.log('✅ User data created in Firestore');
       
       // Process referral rewards if valid referral
       if (validReferral && referrerData) {
@@ -484,7 +532,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Login user
   const login = async (email: string, password: string) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      console.log('🔐 Starting login process...');
+      console.log('📧 Email:', email);
+      
+      console.log('🔍 Attempting Firebase authentication...');
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log('✅ Firebase login successful:', result.user.uid);
       
       // Track login event
       if (analytics) {
@@ -492,8 +545,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           method: 'email'
         });
       }
+      console.log('✅ Login process completed successfully');
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('❌ Login error:', error);
       throw error;
     }
   };
@@ -821,14 +875,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Listen for authentication state changes
   useEffect(() => {
+    console.log('🔧 Setting up auth state listener...');
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log('🔔 Auth state changed:', user ? `User ${user.uid}` : 'No user');
       setCurrentUser(user);
       if (user) {
+        console.log('👤 Loading user data for:', user.uid);
         await loadUserData(user);
       } else {
+        console.log('🚪 User logged out, clearing data');
         setUserData(null);
       }
       setLoading(false);
+      console.log('✅ Auth state update complete');
     });
 
     return unsubscribe;

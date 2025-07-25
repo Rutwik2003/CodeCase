@@ -53,125 +53,127 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-900/90 to-slate-950/95 backdrop-blur-xl border-b border-slate-700/50"></div>
       <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-blue-500/5"></div>
       
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between">
-          {/* CodeCase Icon Only */}
-          <motion.div 
-            className="flex items-center cursor-pointer group flex-shrink-0" 
-            onClick={handleLogoClick}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <div className="relative">
-              <motion.div
-                className="bg-gradient-to-br from-amber-500/20 to-amber-600/20 backdrop-blur-sm border border-amber-400/30 rounded-2xl p-3"
-                whileHover={{ rotate: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Search className="w-8 h-8 text-amber-400 drop-shadow-lg" />
-              </motion.div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full animate-pulse shadow-lg shadow-amber-400/50"></div>
-              <Terminal className="w-5 h-5 text-blue-400 absolute -bottom-1 -right-1 drop-shadow-lg" />
-            </div>
-          </motion.div>
+      <div className="relative z-10 max-w-full mx-auto px-6 sm:px-8 lg:px-12 py-4">
+        <div className="flex items-center justify-between w-full">
+          {/* CodeCase Icon + Title - Left Side */}
+          <div className="flex items-center space-x-4 flex-shrink-0 min-w-[280px]">
+            <motion.div 
+              className="flex items-center cursor-pointer group" 
+              onClick={handleLogoClick}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <div className="relative">
+                <motion.div
+                  className="bg-gradient-to-br from-amber-500/20 to-amber-600/20 backdrop-blur-sm border border-amber-400/30 rounded-2xl p-3"
+                  whileHover={{ rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Search className="w-8 h-8 text-amber-400 drop-shadow-lg" />
+                </motion.div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full animate-pulse shadow-lg shadow-amber-400/50"></div>
+                <Terminal className="w-5 h-5 text-blue-400 absolute -bottom-1 -right-1 drop-shadow-lg" />
+              </div>
+            </motion.div>
 
-          {/* CodeCase Title - Separate from icon */}
-          <motion.div 
-            className="hidden sm:flex flex-col cursor-pointer group flex-shrink-0 ml-4" 
-            onClick={handleLogoClick}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <h1 className="text-xl md:text-2xl font-bold text-slate-100 group-hover:text-amber-100 transition-colors">
-              Code<span className="text-amber-400">Case</span>
-            </h1>
-            <p className="text-xs md:text-sm text-slate-400 font-mono uppercase tracking-wider">Detective Academy</p>
-          </motion.div>
+            <motion.div 
+              className="flex flex-col cursor-pointer group" 
+              onClick={handleLogoClick}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <h1 className="text-xl md:text-2xl font-bold text-slate-100 group-hover:text-amber-100 transition-colors">
+                Code<span className="text-amber-400">Case</span>
+              </h1>
+              <p className="text-xs md:text-sm text-slate-400 font-mono uppercase tracking-wider">Detective Academy</p>
+            </motion.div>
+          </div>
           
-          {/* Center Navigation Menu - with more space from logo */}
-          <nav className="hidden lg:flex items-center space-x-8 flex-1 justify-center ml-16">
-            {onHomeClick && (
+          {/* Center Navigation Menu - Full width and equal buttons */}
+          <nav className="hidden lg:flex items-center justify-center flex-1 px-8">
+            <div className="flex items-center space-x-5">
               <motion.button 
                 onClick={onHomeClick}
                 whileHover={{ scale: 1.05, y: -1 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 text-slate-300 hover:text-amber-300 transition-colors font-medium"
+                className="flex items-center justify-center space-x-3 text-slate-300 hover:text-amber-300 transition-colors font-medium px-10 py-3 rounded-lg hover:bg-slate-800/30 border border-transparent hover:border-amber-400/20 w-[200px] h-[48px] whitespace-nowrap"
               >
-                <Home className="w-4 h-4" />
+                <Home className="w-4 h-4 flex-shrink-0" />
                 <span>Command Center</span>
               </motion.button>
-            )}
-            <motion.button 
-              onClick={() => scrollToSection('cases')}
-              whileHover={{ scale: 1.05, y: -1 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-slate-300 hover:text-amber-300 transition-colors font-medium"
-            >
-              Active Cases
-            </motion.button>
-            <motion.button 
-              onClick={onLearnClick}
-              whileHover={{ scale: 1.05, y: -1 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2 text-slate-300 hover:text-amber-300 transition-colors font-medium"
-            >
-              <BookOpen className="w-4 h-4" />
-              <span>Training</span>
-            </motion.button>
+              <motion.button 
+                onClick={() => scrollToSection('cases')}
+                whileHover={{ scale: 1.05, y: -1 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center space-x-3 text-slate-300 hover:text-amber-300 transition-colors font-medium px-10 py-3 rounded-lg hover:bg-slate-800/30 border border-transparent hover:border-amber-400/20 w-[200px] h-[48px] whitespace-nowrap"
+              >
+                <Terminal className="w-4 h-4" />
+                <span>Active Cases</span>
+              </motion.button>
+              <motion.button 
+                onClick={onLearnClick}
+                whileHover={{ scale: 1.05, y: -1 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center space-x-3 text-slate-300 hover:text-amber-300 transition-colors font-medium px-10 py-3 rounded-lg hover:bg-slate-800/30 border border-transparent hover:border-amber-400/20 w-[200px] h-[48px] whitespace-nowrap"
+              >
+                <BookOpen className="w-4 h-4" />
+                <span>Training</span>
+              </motion.button>
+            </div>
           </nav>
           
-          {/* Middle Right - Detective Status & Action Buttons */}
-          <div className="hidden md:flex items-center space-x-4 ml-8">
+          {/* Right Side - Detective Status & Action Buttons - Full width usage */}
+          <div className="hidden md:flex items-center space-x-3 flex-shrink-0 min-w-[420px] justify-end">
             {/* Detective Status Panel */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               {/* Investigation Points */}
               <motion.div 
-                className="flex items-center space-x-2 bg-slate-800/30 px-3 py-2 rounded-lg backdrop-blur-sm border border-slate-600/30"
+                className="flex items-center justify-center space-x-2 bg-slate-800/30 backdrop-blur-sm border border-slate-600/30 rounded-lg w-[90px] h-[44px]"
                 whileHover={{ scale: 1.05, y: -1 }}
               >
                 <Star className="w-4 h-4 text-amber-400" />
                 <span className="text-sm font-mono text-slate-300">
-                  {userData?.totalPoints?.toLocaleString() || '0'}
+                  {userData?.totalPoints?.toLocaleString() || '8,000'}
                 </span>
               </motion.div>
 
               {/* Available Hints */}
               <motion.div 
-                className="flex items-center space-x-2 bg-slate-800/30 px-3 py-2 rounded-lg backdrop-blur-sm border border-slate-600/30"
+                className="flex items-center justify-center space-x-2 bg-slate-800/30 backdrop-blur-sm border border-slate-600/30 rounded-lg w-[70px] h-[44px]"
                 whileHover={{ scale: 1.05, y: -1 }}
               >
                 <Badge className="w-4 h-4 text-blue-400" />
                 <span className="text-sm font-mono text-slate-300">
-                  {userData?.hints || availableHints}
+                  {userData?.hints || availableHints || '18'}
                 </span>
               </motion.div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center space-x-2">
-              {/* Daily Login Streak Button - Only show if logged in */}
+            <div className="flex items-center space-x-2 pl-3 border-l border-slate-600/30">
+              {/* Daily Login Streak Button */}
               {currentUser && (
                 <motion.button
                   onClick={() => setIsDailyLoginModalOpen(true)}
                   whileHover={{ scale: 1.05, y: -1 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center space-x-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 px-3 py-2 rounded-lg backdrop-blur-sm border border-orange-400/30 hover:border-orange-400/50 transition-all"
+                  className="flex items-center justify-center space-x-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-sm border border-orange-400/30 hover:border-orange-400/50 transition-all rounded-lg w-[80px] h-[44px]"
                   title="Daily Login Streak"
                 >
                   <span className="text-lg">🎯</span>
                   <span className="text-sm font-mono text-orange-300">
-                    {userData?.loginStreak || 0}
+                    {userData?.loginStreak || '12'}
                   </span>
                 </motion.button>
               )}
 
-              {/* Referral Code Button - Only show if logged in */}
+              {/* Referral Code Button */}
               {currentUser && (
                 <motion.button
                   onClick={() => setIsReferralModalOpen(true)}
                   whileHover={{ scale: 1.05, y: -1 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center space-x-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 px-3 py-2 rounded-lg backdrop-blur-sm border border-purple-400/30 hover:border-purple-400/50 transition-all"
+                  className="flex items-center justify-center space-x-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm border border-purple-400/30 hover:border-purple-400/50 transition-all rounded-lg w-[80px] h-[44px]"
                   title="Use Referral Code"
                 >
                   <Users className="w-4 h-4 text-purple-400" />
@@ -179,31 +181,29 @@ export const Header: React.FC<HeaderProps> = ({
                 </motion.button>
               )}
             </div>
-          </div>
 
-          {/* Far Right - User Profile */}
-          <div className="hidden md:flex items-center flex-shrink-0 border-l border-slate-600/30 pl-6 ml-6">
-            {currentUser ? (
-              <div className="relative">
-                {/* User Profile Dropdown Trigger */}
-                <motion.button
-                  onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                  onBlur={() => setTimeout(() => setIsProfileDropdownOpen(false), 150)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center space-x-3 hover:bg-slate-800/50 px-3 py-2 rounded-xl transition-all duration-300 border border-transparent hover:border-amber-400/30 backdrop-blur-sm"
-                >
-                  <div className="w-8 h-8 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full flex items-center justify-center border border-amber-400/30">
-                    <User className="w-4 h-4 text-amber-400" />
-                  </div>
-                  <div className="text-left">
-                    <span className="text-sm font-medium text-slate-100 block">
-                      {userData?.displayName || currentUser.displayName}
-                    </span>
-                    <span className="text-xs text-slate-400">Detective Profile</span>
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
-                </motion.button>
+            {/* User Profile */}
+            <div className="flex items-center border-l border-slate-600/30 pl-3">
+              {currentUser ? (
+                <div className="relative">
+                  <motion.button
+                    onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                    onBlur={() => setTimeout(() => setIsProfileDropdownOpen(false), 150)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center space-x-2 hover:bg-slate-800/50 transition-all duration-300 border border-transparent hover:border-amber-400/30 backdrop-blur-sm rounded-lg w-[160px] h-[44px] px-3"
+                  >
+                    <div className="w-8 h-8 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full flex items-center justify-center border border-amber-400/30">
+                      <User className="w-4 h-4 text-amber-400" />
+                    </div>
+                    <div className="text-left flex-1">
+                      <span className="text-sm font-medium text-slate-100 block truncate">
+                        {userData?.displayName || currentUser.displayName || 'test'}
+                      </span>
+                      <span className="text-xs text-slate-400">Detective</span>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+                  </motion.button>
                 
                 {/* Profile Dropdown Menu */}
                 <AnimatePresence>
@@ -245,18 +245,19 @@ export const Header: React.FC<HeaderProps> = ({
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
-            ) : (
-              <motion.button
-                onClick={onAuthClick}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition-all"
-              >
-                <User className="w-4 h-4" />
-                <span>Sign In</span>
-              </motion.button>
-            )}
+                </div>
+              ) : (
+                <motion.button
+                  onClick={onAuthClick}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition-all w-[160px] h-[44px]"
+                >
+                  <User className="w-4 h-4" />
+                  <span>Sign In</span>
+                </motion.button>
+              )}
+            </div>
           </div>
 
           {/* Mobile menu button */}
